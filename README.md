@@ -1,5 +1,7 @@
 # Handict
 
+![Python package](https://github.com/kemingy/handict/workflows/Python%20package/badge.svg)
+
 Yet another word segmentation tools.
 
 ## Tutorial
