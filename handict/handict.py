@@ -1,14 +1,15 @@
 from math import log1p
 from statistics import variance
+from typing import List, Iterator
 
 from .trie import Trie, Word
 
 
 class Chunk:
-    def __init__(self, words):
+    def __init__(self, words: List[Word]):
         self.words = words
-        self.lens = list(map(len, words))
-        self.total_len = sum(self.lens)
+        self.lens: List[int] = list(map(len, words))
+        self.total_len: int = sum(self.lens)
         self.num = len(words)
         self.mean = self.total_len / len(words)
         self.var = -variance(self.lens) if len(words) > 1 else 0
@@ -20,10 +21,10 @@ class Chunk:
 
 
 class Handict:
-    def __init__(self, dictionary):
+    def __init__(self, dictionary: str):
         self.trie = Trie(dictionary)
 
-    def _get_chunks(self, text, depth=3, words=None):
+    def _get_chunks(self, text: str, depth: int = 3, words: List[Word] = None):
         if words is None:
             words = []
 
@@ -37,7 +38,7 @@ class Handict:
             for word in matches:
                 yield from self._get_chunks(text[len(word):], depth - 1, words + [word])
 
-    def segment(self, text):
+    def segment(self, text: str) -> Iterator[str]:
         while text:
             best_chunk = max(self._get_chunks(text))
             word = best_chunk.words[0]

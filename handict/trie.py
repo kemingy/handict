@@ -1,26 +1,27 @@
 import pathlib
+from typing import Dict, List, Optional
 
 
 class Word:
-    def __init__(self, word=None):
+    def __init__(self, word: Optional[str] = None):
         self.word = word
-        self.trans = {}
-        self.freq = 0
+        self.trans: Dict[str, Word] = {}
+        self.freq: int = 0
 
-    def __len__(self):
-        return len(self.word) or 0
+    def __len__(self) -> int:
+        return len(self.word) if self.word else 0
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'<{self.word}:{self.freq}>'
 
 
 class Trie:
-    def __init__(self, dictionary):
-        self.root = Word()
-        self.num = 0
+    def __init__(self, dictionary: str):
+        self.root: Word = Word()
+        self.num: int = 0
         self.load(dictionary)
 
-    def add(self, word, freq):
+    def add(self, word: str, freq: int):
         node = self.root
         for char in word:
             if char not in node.trans:
@@ -31,7 +32,7 @@ class Trie:
         node.freq = freq
         self.num += 1
 
-    def load(self, dictionary, toleration=0.2):
+    def load(self, dictionary: str, toleration: float = 0.2):
         assert pathlib.Path(dictionary).is_file(), f'Wrong file path: {dictionary}'
         failure = 0
         with open(dictionary, mode='r', encoding='utf-8') as f:
@@ -52,8 +53,8 @@ class Trie:
         if failure / self.num > toleration:
             raise ValueError(f'Too many parse errors. ({failure}/{self.num})')
 
-    def search(self, text):
-        words = []
+    def search(self, text: str) -> List[Word]:
+        words: List[Word] = []
         node = self.root
 
         for char in text:

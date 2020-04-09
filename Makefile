@@ -1,4 +1,4 @@
-check: style test
+check: style type test
 
 install:
 	pip install -e .
@@ -26,4 +26,7 @@ style:
 	# exit-zero treats all errors as warnings
 	flake8 . --count --exit-zero --statistics
 
-.PHONY: test doc
+type:
+	mypy handict/
+
+.PHONY: test doc type
