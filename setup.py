@@ -14,7 +14,7 @@ with open(path.join(here, 'requirements.txt'), encoding='utf-8') as f:
 
 setup(
     name='handict',
-    version='0.0.1',
+    version='0.1.0',
     author='Keming Yang',
     author_email='kemingy94@gmail.com',
     description=('Yet another word segmentation tool.'),
