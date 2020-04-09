@@ -1,7 +1,7 @@
 import pathlib
 
 
-class Node:
+class Word:
     def __init__(self, word=None):
         self.word = word
         self.trans = {}
@@ -16,7 +16,7 @@ class Node:
 
 class Trie:
     def __init__(self, dictionary):
-        self.root = Node()
+        self.root = Word()
         self.num = 0
         self.load(dictionary)
 
@@ -24,7 +24,7 @@ class Trie:
         node = self.root
         for char in word:
             if char not in node.trans:
-                node.trans[char] = Node()
+                node.trans[char] = Word()
             node = node.trans[char]
 
         node.word = word

@@ -1,7 +1,7 @@
 from math import log1p
 from statistics import variance
 
-from .trie import Trie
+from .trie import Trie, Word
 
 
 class Chunk:
@@ -33,7 +33,7 @@ class Handict:
         else:
             matches = self.trie.search(text)
             if not matches:
-                self._get_chunks(text[1:], depth - 1, words + [text[0]])
+                yield from self._get_chunks(text[1:], depth - 1, words + [Word(text[0])])
             for word in matches:
                 yield from self._get_chunks(text[len(word):], depth - 1, words + [word])
 
