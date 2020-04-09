@@ -1,7 +1,6 @@
 from setuptools import setup, find_packages
 from os import path
 from io import open
-from Cython.Build import cythonize
 
 
 here = path.abspath(path.dirname(__file__))
@@ -24,12 +23,6 @@ setup(
     url='https://github.com/kemingy/handict',
     packages=find_packages(exclude=['examples*', 'tests*']),
     package_data={},
-    ext_modules=cythonize(
-        [],
-        compiler_directives={
-            'language_level': 3,  # Python3
-        }
-    ),
     classifiers=[
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.6',
