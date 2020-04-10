@@ -53,14 +53,14 @@ class Trie:
         if failure / self.num > toleration:
             raise ValueError(f'Too many parse errors. ({failure}/{self.num})')
 
-    def search(self, text: str) -> List[Word]:
+    def search(self, text: str, offset: int) -> List[Word]:
         words: List[Word] = []
         node = self.root
 
-        for char in text:
-            if char not in node.trans:
+        for i in range(offset, len(text)):
+            if text[i] not in node.trans:
                 break
-            node = node.trans[char]
+            node = node.trans[text[i]]
             if node.word:
                 words.append(node)
 
