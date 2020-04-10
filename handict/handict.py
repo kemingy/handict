@@ -6,13 +6,14 @@ from .trie import Trie, Word
 
 
 class Chunk:
+    __slots__ = ('words', 'total_len', 'mean', 'var', 'degree')
+
     def __init__(self, words: List[Word]):
         self.words = words
-        self.lens: List[int] = list(map(len, words))
-        self.total_len: int = sum(self.lens)
-        self.num = len(words)
+        lens: List[int] = list(map(len, words))
+        self.total_len: int = sum(lens)
         self.mean = self.total_len / len(words)
-        self.var = -variance(self.lens) if len(words) > 1 else 0
+        self.var = -variance(lens) if len(words) > 1 else 0
         self.degree = sum(log1p(word.freq) for word in words if len(word) == 1)
 
     def __lt__(self, other):
