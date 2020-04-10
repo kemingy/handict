@@ -3,6 +3,8 @@ from typing import Dict, List, Optional
 
 
 class Word:
+    __slots__ = ('word', 'trans', 'freq')
+
     def __init__(self, word: Optional[str] = None):
         self.word = word
         self.trans: Dict[str, Word] = {}
