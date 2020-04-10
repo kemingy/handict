@@ -21,7 +21,7 @@ setup(
     long_description=readme,
     long_description_content_type='text/markdown',
     url='https://github.com/kemingy/handict',
-    packages=find_packages(exclude=['examples*', 'tests*']),
+    packages=find_packages(exclude=['examples*', 'tests*', 'bench*']),
     package_data={},
     classifiers=[
         'Programming Language :: Python :: 3 :: Only',

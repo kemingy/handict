@@ -24,23 +24,24 @@ class Handict:
     def __init__(self, dictionary: str):
         self.trie = Trie(dictionary)
 
-    def _get_chunks(self, text: str, depth: int = 3, words: List[Word] = None):
+    def _get_chunks(self, text: str, offset: int, depth: int = 3, words: List[Word] = None):
         if words is None:
             words = []
 
-        if depth == 0 or not text:
+        if depth == 0 or offset >= len(text):
             if words:
                 yield Chunk(words)
         else:
-            matches = self.trie.search(text)
+            matches = self.trie.search(text, offset)
             if not matches:
-                yield from self._get_chunks(text[1:], depth - 1, words + [Word(text[0])])
+                yield from self._get_chunks(text, offset + 1, depth - 1, words + [Word(text[offset])])
             for word in matches:
-                yield from self._get_chunks(text[len(word):], depth - 1, words + [word])
+                yield from self._get_chunks(text, offset + len(word), depth - 1, words + [word])
 
     def segment(self, text: str) -> Iterator[str]:
-        while text:
-            best_chunk = max(self._get_chunks(text))
-            word = best_chunk.words[0]
-            text = text[len(word):]
-            yield word.word
+        i = 0
+        while i < len(text):
+            best_chunk = max(self._get_chunks(text, i))
+            match = best_chunk.words[0]
+            i += len(match)
+            yield match.word
