@@ -6,6 +6,9 @@ install:
 test:
 	pytest tests -vv
 
+bench:
+	python bench/benchmark.py
+
 doc:
 	cd docs && make html
 
@@ -29,4 +32,4 @@ style:
 type:
 	mypy handict/
 
-.PHONY: test doc type
+.PHONY: test doc type bench
